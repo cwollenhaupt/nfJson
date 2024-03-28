@@ -127,7 +127,7 @@ else
 		lcName = strtran(m.var,'_vfpsafe_','')
 		loNameList = m.config.FlatFoxProToJsonNameList
 		If m.loNameList.GetKey(m.lcName) > 0
-			lcName = loNameList[m.lcName]
+			lcName = loNameList.Items[m.lcName]
 		EndIf
 
 		este = m.este+["]+m.lcName+[":]
