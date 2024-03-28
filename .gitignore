@@ -32,6 +32,14 @@ $RECYCLE.BIN/
 # Thumbnails
 ._*
 
+# FoxUnit files
+FxuClassFactory.dbf
+FXUResults.DBF
+FXUResults.FPT
+FXUResults.CDX
+FXUPERSIST.XML
+FXUPERSISTGETTEMPLATE.XML
+
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd

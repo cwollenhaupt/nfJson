@@ -1,11 +1,19 @@
 *-------------------------------------------------------------------
 * Created by Marco Plaza , 2013-2019 @nfTools
 *-------------------------------------------------------------------
-Lparameters cjsonstr,revivecollection
+Lparameters cjsonstr,revivecollection,roConfig
 
 #Define crlf Chr(13)+Chr(10)
 
 Private All
+
+If Vartype(m.roConfig) != "O"
+	roConfig = CreateObject("Empty")
+EndIf
+config = m.roConfig
+If Vartype(m.config.FlatFoxProToJsonNameList) != "O"
+	AddProperty (m.config, "FlatFoxProToJsonNameList", CreateObject("Collection"))
+EndIf
 
 stacklevels=Astackinfo(aerrs)
 
@@ -311,12 +319,24 @@ If Right(m.aj(m.x),1) # '"'
 Endif
 
 vari = Rtrim(m.vari,1,'"')
+
+Local lcJsonName, lcFoxProName
+lcJsonName = m.vari
+
 vari = Iif(Isalpha(m.vari),'','_')+m.vari
 vari = Chrtran( vari, Chrtran( vari, cvalid,'' ) , creem )
 
 If vari == 'tabindex'
 	vari = '_tabindex'
-Endif
+EndIf
+
+lcFoxProName = m.vari
+
+Local loNameList as Collection
+loNameList = m.config.FlatFoxProToJsonNameList
+If loNameList.GetKey(m.lcFoxProName) == 0
+	loNameList.Add (m.lcJsonName, m.lcFoxProName)
+EndIf
 
 expecting = ':'
 expectingvalue = .T.

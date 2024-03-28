@@ -15,11 +15,20 @@
 * encode control characters ( chr(0) ~ chr(31) )
 * ver 1.121 - 26/07/2023 - minor optimization ( escapeandencode() )
 *-----------------------------------------------------------------------
-parameters ovfp,formattedOutput,nonullarrayitem,crootName,aMembersFlag
+parameters ovfp,formattedOutput,nonullarrayitem,crootName,aMembersFlag,toConfig
 
 #define crlf chr(13)+Chr(10)
 
 private all
+
+config = m.toConfig
+If Vartype(m.config) != "O"
+	config = CreateObject("Empty")
+EndIf
+If Vartype(m.config.FlatFoxProToJsonNameList) != "O"
+	AddProperty (m.config, "FlatFoxProToJsonNameList", CreateObject("Collection"))
+EndIf
+
 amembersFlag = evl(m.amembersFlag,'U')
 
 esarray = type('oVfp',1) = 'A'
@@ -73,7 +82,10 @@ if isnull(m.obt)
 	return 'null'
 endif
 
+Local loConfig
+m.loConfig = config
 private all except _nivel
+config = m.loConfig
 
 este = ''
 
@@ -110,8 +122,15 @@ else
 		var = lower(am(m.x1))
 
 		este = m.este+iif(m.x1>1,',','')+m.xtabs
+		
+		Local lcName, loNameList as Collection
+		lcName = strtran(m.var,'_vfpsafe_','')
+		loNameList = m.config.FlatFoxProToJsonNameList
+		If m.loNameList.GetKey(m.lcName) > 0
+			lcName = loNameList[m.lcName]
+		EndIf
 
-		este = m.este+["]+strtran(m.var,'_vfpsafe_','')+[":]
+		este = m.este+["]+m.lcName+[":]
 
 		esobjeto = type('m.obt.&Var')='O'
 
