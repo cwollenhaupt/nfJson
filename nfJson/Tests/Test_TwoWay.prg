@@ -43,4 +43,21 @@ Procedure Test_ReplacementOfCharacters
 	lcExpected = Strtran (m.lcJson, Chr(13)+Chr(10))
 	This.AssertEquals (m.lcExpected, m.lcResult)
 	
+*========================================================================================
+Procedure Test_EmptyArray
+	Local lcJson
+	* Values ordered alphabetically, because nfJson returns them this way. JSON does 
+	* not specify an order.
+	Text to m.lcJson NoShow PRETEXT 2
+	{
+		"aTest":[]
+	}
+	EndText
+	*
+	Local loObject, lcResult, lcExpected, loConfig
+	loObject = nfJsonRead (m.lcJson, ,@loConfig)
+	lcResult = nfJsonCreate (m.loObject,,,,,m.loConfig)
+	lcExpected = Strtran (m.lcJson, Chr(13)+Chr(10))
+	This.AssertEquals (m.lcExpected, m.lcResult)
+
 EndDefine

@@ -330,7 +330,7 @@ If vari == 'tabindex'
 	vari = '_tabindex'
 EndIf
 
-lcFoxProName = m.vari
+lcFoxProName = Lower(m.vari)
 
 Local loNameList as Collection
 loNameList = m.config.FlatFoxProToJsonNameList

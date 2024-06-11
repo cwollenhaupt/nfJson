@@ -127,7 +127,7 @@ else
 		lcName = strtran(m.var,'_vfpsafe_','')
 		loNameList = m.config.FlatFoxProToJsonNameList
 		If m.loNameList.GetKey(m.lcName) > 0
-			lcName = loNameList.Items[m.lcName]
+			lcName = loNameList.Item[m.lcName]
 		EndIf
 
 		este = m.este+["]+m.lcName+[":]
@@ -183,6 +183,11 @@ return m.este
 *----------------------------------------------------
 procedure procarray(obt,arrayName,nonullarrayitem)
 *----------------------------------------------------
+If Alen(m.obt.&arrayName) = 1 and IsNull(m.obt.&arrayName[1])
+	este = este + '[]'
+	Return
+EndIf
+
 nrows = alen(m.obt.&arrayName,1)
 ncols = alen(m.obt.&arrayName,2)
 bidim = m.ncols > 0
