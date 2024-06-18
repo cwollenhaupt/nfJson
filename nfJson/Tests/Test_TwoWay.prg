@@ -60,4 +60,18 @@ Procedure Test_EmptyArray
 	lcExpected = Strtran (m.lcJson, Chr(13)+Chr(10))
 	This.AssertEquals (m.lcExpected, m.lcResult)
 
+*========================================================================================
+Procedure Test_NestedArrays   && Only an issue in the original VFP 9 release
+	Local lcJson
+	Text to m.lcJson NoShow PRETEXT 2
+		{"a_a":[{"array_b":[{"value":"abc"}]}],"address":{"propA":"12345678901234567890123123456789012345689012345678901234567890123456789"}}
+	EndText
+	Text to m.lcJson NoShow PRETEXT 2
+		{"a_a":[{"array_b":[{"value":"abc"}]}],"address":{"propA":"12345678901234567890123123456789012345689012345678901234567890123456789"}}
+	EndText
+	*
+	Local loObject, lcResult, lcExpected
+	loObject = nfJsonRead (m.lcJson)
+	lcResult = nfJsonCreate (m.loObject)
+
 EndDefine

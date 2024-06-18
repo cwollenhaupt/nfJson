@@ -237,9 +237,11 @@ do while m.nelem <= m.titems
 
 				este = m.este + '}'+m.xTabs+'}'
 
-			else
-
-   				este =  m.este+[{]+procobject(m.elem ,.f.,m.nonullarrayitem,m.amembersFlag)+[}]
+			Else
+					
+					Local lcObject
+					lcObject = procobject(m.elem ,.f.,m.nonullarrayitem,m.amembersFlag)
+   				este =  m.este+[{]+m.lcObject+[}]
 
 			endif
 
